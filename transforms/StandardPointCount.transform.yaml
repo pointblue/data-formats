@@ -1,0 +1,40 @@
+# this is the Point Count transform used for the standard Point Count input format
+# use this as an example for other transforms
+
+formatId: PointCountStandard
+eventType: PointCount
+objects:
+
+  SamplingEventPointCount:
+    # fields are specified relative to the inputObject
+    inputObject: Event
+    fieldmap:
+      # ProjectId: auto-filled from project context
+      # ProtocolId: auto-filled given protocol upon load
+      SamplingUnitId: =ID(LOOKUP(SamplingUnit, ShortName, EventSamplingUnitShortName))
+      EventDate: EventDate
+      EventStartTime: EventStartTime
+      EventEndTime: EventEndTime
+      # fields can be functions from a predefined list
+      PrimaryObserverId: =ID(LOOKUP(Researcher, Email, Event.ObserverEmail))
+      Notes: Notes
+      ExtendedColumns:
+        inputObject: Event
+        fieldmap:
+      ObservationPointCount:
+        inputObject: Observation
+        fieldmap:
+          SpeciesCode: SpeciesCode
+          ObservationTime: ObservationTime
+          BirdCount: BirdCount
+          DetectionCueId: DetectionCueId
+          DistanceBinId: DistanceBinId
+          TimeBinId: TimeBinId
+          BreedingStatusCode: BreedingStatusCd
+          SingingIndicator: SingingIndicator
+          CompassBearing: CompassBearing
+          ClusterIndicator: ClusterIndicator
+          Notes: Notes
+          ExtendedColumns:
+            inputObject: Observation
+            fieldmap:

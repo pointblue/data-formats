@@ -1,0 +1,3 @@
+functions:
+  =ADD(A,B): add two numbers, A and B. result will be the more precise of the two types
+  =YEAR(E2):

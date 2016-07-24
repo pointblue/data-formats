@@ -1,0 +1,9 @@
+
+formatName: StandardPointCount
+fileType: excel
+tabs:
+  SamplingEvents:
+    Event:
+      ProjectId:
+        type:
+      Sampling

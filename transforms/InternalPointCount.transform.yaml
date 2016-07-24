@@ -1,0 +1,41 @@
+# this is a transform to convert the standard target format into Point Blue's internal format
+
+formatId: PointCountTarget
+protocolType: PointCount
+objects:
+
+  SamplingEvent_Count:
+    object: Event # fields are specified relative to this object, or they can be prefixed by another object
+    fieldmap:
+      ProjectId: ProjectId
+      SamplingUnitId: SamplingUnitId
+      # SamplingEventTypeCd: derived from protocolType
+      ProtocolId: ProtocolId
+      # SamplingEventCounter: derived from VisitId
+      SamplingEventGroupId: VisitId
+      SamplingEventDataStatusCd: =LITERAL('RAW')
+      SamplingEventDt: EventDate
+      SamplingEventStartTm: EventStartTime
+      SamplingEventEndTm: EventEndTime
+      SamplingEventYear: =YEAR(EventDate)
+      SamplingEventMonth: =MONTH(EventDate)
+      SamplingEventDay: =DAY(EventDate)
+      TotalBirdsCounted: =SUM(Event.Observations.BirdCount)
+      SamplingEventRemarks: Notes
+      ExtendedColumns: ExtendedColumns
+
+  SamplingEventObservation_Count:
+    object: Observation
+    fieldmap:
+      BirdCount: Count
+      DetectionCueId: DetectionCode
+      DistanceBinId: Distance
+      TimeBinId: Minute
+      BreedingStatusCd: BreedingCode
+      SingingInd
+      CompassBearing
+      ClusterInd
+      ObservationTm: ObservationTime
+      ResearcherId: Event.PrimaryObserverId
+      FieldBirdId: SpeciesCode
+      ObservationRemarks: Notes
