@@ -1,2 +1,2 @@
 # data-formats
-format and transform definitions for incoming and outgoing data
+format definitions and transform specs for data imports and exports to and from the data management platform.
