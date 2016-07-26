@@ -1,11 +1,9 @@
 
-formatId: WN-BBA
-eventType: PointCount
-objects:
-
-  SamplingEventPointCount:
-    object: Event # fields are specified relative to this object, or they can be prefixed by another object
-    fieldmap:
+FormatId: WN-BBA
+SamplingEventTransforms:
+  -
+    EventType: PointCount # this specifies a schema, with primary keys.  Could be "PointCountDoubleObserver".
+    Events: # fields are specified relative to this object, or they can be prefixed by another object
       # ProjectId: auto-filled from project context
       # ProtocolId: auto-filled given protocol upon load
       SamplingUnitCode: PointId
@@ -15,43 +13,33 @@ objects:
       PrimaryObserverId: =ID(LOOKUP(Researcher, Email, Event.ObserverEmail))
       SamplingEventRemarks: Notes
       ExtendedColumns:
-        inputObject: Event
-        fieldmap:
-          Latitude: Latitude
-          Longitude: Longitude
-      ObservationPointCount:
-        inputObject: Observation
-        fieldmap:
-          SpeciesCode: SpeciesCode
-          ObservationTime: ADD(Event.SurveyStartTime, Minute)
-          BirdCount: Count
-          DetectionCueId: DetectionCode
-          DistanceBinId: Distance
-          TimeBinId: Minute
-          BreedingStatusCode: BreedingCode
-          Notes: Notes
-          ExtendedColumns:
-            inputObjectName: Observation
-            fieldmap:
-              RedetectionCode: RedetectionCode
-              RedetectionDistance: RedetectionDistance
-              RedetectionMinute: RedetectionMinute
-
-
-  SamplingEventSiteConditions:
-    object: Event
-    fieldmap:
+        Latitude: Latitude
+        Longitude: Longitude
+      Observations:
+        SpeciesCode: SpeciesCode
+        ObservationTime: ADD(Event.SurveyStartTime, Minute)
+        BirdCount: Count
+        DetectionCueId: DetectionCode
+        DistanceBinId: Distance
+        TimeBinId: Minute
+        BreedingStatusCode: BreedingCode
+        Notes: Notes
+        ExtendedColumns:
+          RedetectionCode: RedetectionCode
+          RedetectionDistance: RedetectionDistance
+          RedetectionMinute: RedetectionMinute
+  -
+    EventType: SiteConditions
+    Events:
       # ProjectId: auto-filled from project context
       # ProtocolId: auto-filled given protocol upon load
       SamplingUnitCode: PointId
       EventDate: SurveyDate
-      ObservationSiteConditions:
-        inputObject: SiteConditions
-        fieldmap:
-          Habitat1: Habitat1
-          Habitat2: Habitat2
-          Temp: Temp
-          Wind: Wind
-          Sky: Sky
-          Noise: Noise
-          Notes: Notes
+      Observations:
+        Habitat1: Habitat1
+        Habitat2: Habitat2
+        Temp: Temp
+        Wind: Wind
+        Sky: Sky
+        Noise: Noise
+        Notes: Notes
