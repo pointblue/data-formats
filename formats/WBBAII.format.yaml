@@ -1,0 +1,147 @@
+
+formatName: WN-BBA
+fileType: Excel
+protocols:
+  - id: WBBAII_FR50 # id of Protocol used in this data
+    event: Event # name of Event object in tab definition
+    observations: Observation # name of Observation object in tab definition
+    observationEventForeignKey: # columns used to key from Observation to Event; this may be composite
+      PointId: PointId
+  - id: WBBAII_SC
+    event: SiteConditionsEvent
+    observation: SiteConditionsObservation
+    observationEventForeignKey:
+      PointId: PointId
+data:
+  tabs:
+    D_SamplingEvents:
+      headerRow: 3
+      dataStartRow: 4
+      objects:
+        Event:
+          PointId:
+            type: Project.SamplingUnitCode
+            primaryKey: true
+          ObserverEmail:
+            type: emailAddress
+          SurveyDate:
+            type: date
+            format: 'MM/DD/YYYY'
+            primaryKey: true
+          SurveyStartTime:
+            type: time
+            format: 'hh:mm'
+          Latitude:
+            type: decimal
+            format: '(7,5)'
+          Longitude:
+            type: decimal
+            format: '(7,5)'
+        SiteConditionsEvent:
+          PointId:
+            type: Project.SamplingUnitCode
+            primaryKey: true
+        SiteConditionsObservation:
+          PointId:
+            type: Project.SamplingUnitCode
+            primaryKey: true
+          Habitat1:
+            type: protocol.WBBAII-SC.HabitatCode
+          Habitat2:
+            type: protocol.WBBAII-SC.HabitatCode
+          Temp:
+            type: integer
+          Wind:
+            type: integer
+          Sky:
+            type: integer
+          Noise:
+            type: integer
+          Notes:
+            type: string
+    D_Observations:
+      headerRow: 3
+      dataStartRow: 4
+      objects:
+        Observation:
+          PointId:
+            type: Project.SamplingUnitCode
+            required: true
+          Sequence:
+            type: integer
+            required: true
+            value: =Rownum # special hidden column Rownum?
+          SpeciesCode:
+            type: Project.SpeciesCode
+          DetectionCode:
+            type: string
+            format: dictionary
+            dictionary: DetectionCodes
+          Distance:
+            type: string
+            format: dictionary
+            dictionary: DistanceBins
+          Minute:
+            type: integer
+            format: list
+            list: =RANGE(0,9)
+          Count:
+            type: integer
+          BreedingCode:
+            type: string
+            format: dictionary
+            dictionary: BreedingCodes
+          RedetectionCode:
+            type: string
+            format: dictionary
+            dictionary: RedetectionCodes
+          RedetectionDistance:
+            type: string
+            format: dictionary
+            dictionary: DistanceBins
+          RedetectionMinute:
+            type: integer
+            format: list
+            list: =RANGE(0,9)
+dictionaries:
+  DistanceBins:
+    - L50: 0m - 50m
+    - G50: 51m - 100m
+    - B00: 100m - 1000m
+  DetectionCodes:
+    - C: Calling
+    - F: Flyover
+    - NV: Non-vocal
+    - O: Observed
+    - S: Singing
+  RedetectionCodes:
+    - S: Singing
+  BreedingCodes:
+    - OBSERVED:
+        - '': Observed (enter in eBird, no code required)
+        - F: Flyover
+    - POSSIBLE:
+        - H: In appropriate Habitat
+        - S: Singing male (excluding migrants)
+    - PROBABLE:
+        - S7: Singing male heard 7+ days apart
+        - M: Multiple (7+) singing males
+        - P: Pair in suitable habitat
+        - T: Territory defense
+        - C: Courtship display/copulation
+        - N: Visiting probable Nest site
+        - A: Agitated behavior
+        - B: Woodpecker/wren nest Building/cavity excavation
+    - CONFIRMED:
+        - PE: Physiological Evidence/brood patch
+        - CN: Carrying Nest material
+        - NB: Nest Building (except woodpeckers & wrens)
+        - DD: Distraction Display
+        - UN: Used Nest (use with caution)
+        - ON: Occupied Nest
+        - FL: Recently FLedged young
+        - CF: Carrying Food
+        - FY: Feeding Young
+        - FS: Carrying Fecal Sac
+        - NE: Nest w/Eggs
+        - NY: Nest w/Young
