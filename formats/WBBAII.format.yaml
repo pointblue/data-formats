@@ -12,6 +12,7 @@ protocols:
     observation: SiteConditionsObservation
     observationEventForeignKey:
       PointId: PointId
+
 data:
   tabs:
     D_SamplingEvents:
@@ -26,6 +27,7 @@ data:
       dataStartRow: 4
       objects:
         - Observation
+
 objects:
   Event:
     PointId:
@@ -43,9 +45,11 @@ objects:
     Latitude:
       type: decimal
       format: '(7,5)'
+      units: degrees
     Longitude:
       type: decimal
       format: '(7,5)'
+      units: degrees
 
   SiteConditionsEvent:
     PointId:

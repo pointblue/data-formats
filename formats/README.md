@@ -26,6 +26,18 @@ there are three kinds of input formats:
 * **range**: used with numeric and time-based data types.
 * **regex**: mostly used with character data types.  for numeric types, use a list or range if possible.
 
+### Field Definition Attributes
+* **type**: the data type of the field (see "Data Types" for allowed values)
+* **format**: parser instructions and validation constraints on the field value (see "Formats" for allowed values)
+* **units**
+* **primaryKey**
+* **instructions**
+* **dictionary**
+* **list**
+* **range**
+* **regex**
+* **value**
+
 ### Magic Columns
 * RowNum: ordinal number of the data row in the spreadsheet, starting at 1 at the first data row
 
