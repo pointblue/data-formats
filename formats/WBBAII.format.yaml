@@ -53,10 +53,12 @@ data:
             type: integer
           Wind:
             type: integer
+            instructions: 'If sustained 4 or 5, end survey'
           Sky:
             type: integer
           Noise:
             type: integer
+            instructions: 'If noise code 3 or 4, do not survey and move to next backup point'
           Notes:
             type: string
     D_Observations:
@@ -77,16 +79,20 @@ data:
             type: string
             format: dictionary
             dictionary: DetectionCodes
+            instructions: 'Only use one, if >1 applies, use topmost'
           Distance:
             type: string
             format: dictionary
             dictionary: DistanceBins
+            instructions: 'distance when individual first detected'
           Minute:
             type: integer
             format: list
             list: =RANGE(0,9)
+            instructions: 'minute (0–9) when individual first detected'
           Count:
             type: integer
+            instructions: 'estimated number of individuals (should be “1” in most cases)'
           BreedingCode:
             type: string
             format: dictionary
@@ -105,9 +111,9 @@ data:
             list: =RANGE(0,9)
 dictionaries:
   DistanceBins:
-    - L50: 0m - 50m
-    - G50: 51m - 100m
-    - B00: 100m - 1000m
+    - L50: 0 - 50m
+    - G50: 51 - 100m
+    - B00: 100 - 1000m
   DetectionCodes:
     - C: Calling
     - F: Flyover
@@ -145,3 +151,64 @@ dictionaries:
         - FS: Carrying Fecal Sac
         - NE: Nest w/Eggs
         - NY: Nest w/Young
+  Wind Speed*
+  0
+  Calm (<1 mph)
+  1
+  Light air (1–3 mph)
+  2
+  Light breeze (4–7 mph)
+  3
+  Gentle breeze (8–12 mph)
+  4
+  Moderate breeze (13–18 mph)
+  5
+  Fresh breeze (19–24 mph)
+
+ Sky Condition
+ 0
+ Clear
+ 1
+ Partly Cloudy
+ 2
+ Cloudy
+ 4
+ Fog or Smoke
+ 5
+ Drizzle
+ 7
+ Snow
+ 8
+ Rain Showers
+
+
+Detection Code*
+J
+Juvenile 
+F
+Flyover 
+S
+Singing 
+C
+Calling 
+V
+Visual 
+
+
+Noise Code*
+   
+0
+None
+No background noise (BN) during most of survey 
+1
+Faint
+Faint BN during at least half of survey 
+2
+Moderate
+Moderate BN; difficulty hearing birds > 100 m away 
+3
+Loud
+Loud BN; difficulty hearing birds >50 m away 
+4
+Intense
+Intense BN; difficulty hearing birds >25 m away 
