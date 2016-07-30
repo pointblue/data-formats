@@ -18,110 +18,122 @@ data:
       headerRow: 3
       dataStartRow: 4
       objects:
-        Event:
-          PointId:
-            type: Project.SamplingUnitCode
-            primaryKey: true
-          ObserverEmail:
-            type: emailAddress
-          SurveyDate:
-            type: date
-            format: 'MM/DD/YYYY'
-            primaryKey: true
-          SurveyStartTime:
-            type: time
-            format: 'hh:mm'
-          Latitude:
-            type: decimal
-            format: '(7,5)'
-          Longitude:
-            type: decimal
-            format: '(7,5)'
-        SiteConditionsEvent:
-          PointId:
-            type: Project.SamplingUnitCode
-            primaryKey: true
-        SiteConditionsObservation:
-          PointId:
-            type: Project.SamplingUnitCode
-            primaryKey: true
-          Habitat1:
-            type: protocol.WBBAII-SC.HabitatCode
-          Habitat2:
-            type: protocol.WBBAII-SC.HabitatCode
-          Temp:
-            type: integer
-          Wind:
-            type: integer
-            instructions: 'If sustained 4 or 5, end survey'
-          Sky:
-            type: integer
-          Noise:
-            type: integer
-            instructions: 'If noise code 3 or 4, do not survey and move to next backup point'
-          Notes:
-            type: string
+        - Event
+        - SiteConditionsEvent
+        - SiteConditionsObservation
     D_Observations:
       headerRow: 3
       dataStartRow: 4
       objects:
-        Observation:
-          PointId:
-            type: Project.SamplingUnitCode
-            required: true
-          Sequence:
-            type: integer
-            required: true
-            value: =Rownum # special hidden column Rownum?
-          SpeciesCode:
-            type: Project.SpeciesCode
-          DetectionCode:
-            type: string
-            format: dictionary
-            dictionary: DetectionCodes
-            instructions: 'Only use one, if >1 applies, use topmost'
-          Distance:
-            type: string
-            format: dictionary
-            dictionary: DistanceBins
-            instructions: 'distance when individual first detected'
-          Minute:
-            type: integer
-            format: list
-            list: =RANGE(0,9)
-            instructions: 'minute (0–9) when individual first detected'
-          Count:
-            type: integer
-            instructions: 'estimated number of individuals (should be “1” in most cases)'
-          BreedingCode:
-            type: string
-            format: dictionary
-            dictionary: BreedingCodes
-          RedetectionCode:
-            type: string
-            format: dictionary
-            dictionary: RedetectionCodes
-          RedetectionDistance:
-            type: string
-            format: dictionary
-            dictionary: DistanceBins
-          RedetectionMinute:
-            type: integer
-            format: list
-            list: =RANGE(0,9)
+        - Observation
+objects:
+  Event:
+    PointId:
+      type: Project.SamplingUnitCode
+      primaryKey: true
+    ObserverEmail:
+      type: emailAddress
+    SurveyDate:
+      type: date
+      format: 'MM/DD/YYYY'
+      primaryKey: true
+    SurveyStartTime:
+      type: time
+      format: 'hh:mm'
+    Latitude:
+      type: decimal
+      format: '(7,5)'
+    Longitude:
+      type: decimal
+      format: '(7,5)'
+
+  SiteConditionsEvent:
+    PointId:
+      type: Project.SamplingUnitCode
+      primaryKey: true
+
+  SiteConditionsObservation:
+    PointId:
+      type: Project.SamplingUnitCode
+      primaryKey: true
+    Habitat1:
+      type: protocol.WBBAII-SC.HabitatCode
+    Habitat2:
+      type: protocol.WBBAII-SC.HabitatCode
+    Temp:
+      type: integer
+    Wind:
+      type: integer
+      instructions: 'If sustained 4 or 5, end survey'
+    Sky:
+      type: integer
+    Noise:
+      type: integer
+      instructions: 'If noise code 3 or 4, do not survey and move to next backup point'
+    Notes:
+      type: string
+
+  Observation:
+    PointId:
+      type: Project.SamplingUnitCode
+      required: true
+    Sequence:
+      type: integer
+      required: true
+      value: =Rownum # special hidden column Rownum?
+    SpeciesCode:
+      type: Project.SpeciesCode
+    DetectionCode:
+      type: string
+      format: dictionary
+      dictionary: DetectionCodes
+      instructions: 'Only use one, if >1 applies, use topmost'
+    Distance:
+      type: string
+      format: dictionary
+      dictionary: DistanceBins
+      instructions: 'distance when individual first detected'
+    Minute:
+      type: integer
+      format: list
+      list: =RANGE(0,9)
+      instructions: 'minute (0–9) when individual first detected'
+    Count:
+      type: integer
+      instructions: 'estimated number of individuals (should be “1” in most cases)'
+    BreedingCode:
+      type: string
+      format: dictionary
+      dictionary: BreedingCodes
+    RedetectionCode:
+      type: string
+      format: dictionary
+      dictionary: RedetectionCodes
+    RedetectionDistance:
+      type: string
+      format: dictionary
+      dictionary: DistanceBins
+    RedetectionMinute:
+      type: integer
+      format: list
+      list: =RANGE(0,9)
+
 dictionaries:
   DistanceBins:
     - L50: 0 - 50m
     - G50: 51 - 100m
     - B00: 100 - 1000m
+
   DetectionCodes:
     - C: Calling
     - F: Flyover
     - NV: Non-vocal
     - O: Observed
     - S: Singing
+
   RedetectionCodes:
     - S: Singing
+
   BreedingCodes:
     - OBSERVED:
         - '': Observed (enter in eBird, no code required)
@@ -151,35 +163,37 @@ dictionaries:
         - FS: Carrying Fecal Sac
         - NE: Nest w/Eggs
         - NY: Nest w/Young
-  Wind Speed*
-  0
-  Calm (<1 mph)
-  1
-  Light air (1–3 mph)
-  2
-  Light breeze (4–7 mph)
-  3
-  Gentle breeze (8–12 mph)
-  4
-  Moderate breeze (13–18 mph)
-  5
-  Fresh breeze (19–24 mph)
 
- Sky Condition
- 0
- Clear
- 1
- Partly Cloudy
- 2
- Cloudy
- 4
- Fog or Smoke
- 5
- Drizzle
- 7
- Snow
- 8
- Rain Showers
+Wind Speed*
+0
+Calm (<1 mph)
+1
+Light air (1–3 mph)
+2
+Light breeze (4–7 mph)
+3
+Gentle breeze (8–12 mph)
+4
+Moderate breeze (13–18 mph)
+5
+Fresh breeze (19–24 mph)
+
+
+Sky Condition
+0
+Clear
+1
+Partly Cloudy
+2
+Cloudy
+4
+Fog or Smoke
+5
+Drizzle
+7
+Snow
+8
+Rain Showers
 
 
 Detection Code*
